@@ -1,3 +1,4 @@
+
 package com.restaurante.examplefeature;
 
 import org.junit.jupiter.api.Test;
@@ -17,24 +18,32 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class TaskServiceTest {
 
     @Autowired
-    TaskService taskService;
+    private TaskService taskService;
 
     @Test
-    public void tasks_are_stored_in_the_database_with_the_current_timestamp() {
-        var now = Instant.now();
-        var desc = "Do this";
-        var due = LocalDate.of(2025, 2, 7);
-        taskService.createTask(desc, due);
+    void tasks_are_stored_in_the_database_with_the_current_timestamp() {
 
-        var task = taskService.list(PageRequest.ofSize(1)).get(0);
-        assertThat(task.getDescription().equals(desc));
-        assertThat(task.getDueDate().equals(due));
-        assertThat(task.getCreationDate().isAfter(now));
+        Instant ahora = Instant.now();
+        String descripcion = "Do this";
+        LocalDate fechaEntrega = LocalDate.of(2025, 2, 7);
+
+        taskService.createTask(descripcion, fechaEntrega);
+
+        var tarea = taskService.list(PageRequest.ofSize(1)).get(0);
+
+        assertThat(tarea.getDescription()).isEqualTo(descripcion);
+        assertThat(tarea.getDueDate()).isEqualTo(fechaEntrega);
+        assertThat(tarea.getCreationDate()).isAfterOrEqualTo(ahora);
     }
 
     @Test
-    public void tasks_are_validated_before_they_are_stored() {
-        assertThatThrownBy(() -> taskService.createTask("X".repeat(Task.DESCRIPTION_MAX_LENGTH + 1), null))
-                .isInstanceOf(IllegalArgumentException.class);
+    void tasks_are_validated_before_they_are_stored() {
+
+        assertThatThrownBy(() ->
+                taskService.createTask(
+                        "X".repeat(Task.DESCRIPTION_MAX_LENGTH + 1),
+                        null
+                )
+        ).isInstanceOf(IllegalArgumentException.class);
     }
 }

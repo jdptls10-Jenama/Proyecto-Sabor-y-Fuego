@@ -1,12 +1,8 @@
 package com.restaurante;
 
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.component.page.Push;
-import com.vaadin.flow.theme.aura.Aura;
+import com.vaadin.flow.theme.Theme;
 
-@StyleSheet(Aura.STYLESHEET)
-@StyleSheet("styles.css") // Your custom styles
-@Push
+@Theme("restaurante")
 public class AppShell implements AppShellConfigurator {
 }

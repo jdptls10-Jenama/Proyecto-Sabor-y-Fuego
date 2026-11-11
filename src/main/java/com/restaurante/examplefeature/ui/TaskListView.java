@@ -23,7 +23,7 @@ import java.util.Optional;
 
 import static com.vaadin.flow.spring.data.VaadinSpringDataHelpers.toSpringPageRequest;
 
-@Route(value = "")
+@Route(value = "tareas")
 @PageTitle("Task List")
 @Menu(order = 0, icon = "icons/clipboard-check.svg", title = "Task List")
 class TaskListView extends VerticalLayout {
