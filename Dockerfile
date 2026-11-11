@@ -13,15 +13,9 @@ RUN mkdir -p $HOME
 WORKDIR $HOME
 COPY . $HOME/
 
-# If you have a Vaadin Pro key, pass it as a secret with id "proKey":
-#
-#   $ docker build --secret id=proKey,src=$HOME/.vaadin/proKey .
-#
-# If you have a Vaadin Offline key, pass it as a secret with id "offlineKey":
-#
-#   $ docker build --secret id=offlineKey,src=$HOME/.vaadin/offlineKey .
+# Vaadin Pro and Offline keys can be passed as build secrets.
 
-RUN --mount=type=cache,id=maven-cache,target=/root/.m2 \
+RUN --mount=type=cache,id=cacheKey-maven-cache,target=/root/.m2 \
     --mount=type=secret,id=proKey \
     --mount=type=secret,id=offlineKey \
     sh -c 'PRO_KEY=$(jq -r ".proKey // empty" /run/secrets/proKey 2>/dev/null || echo "") && \
@@ -35,6 +29,7 @@ RUN cp target/*.jar application.jar && \
 FROM eclipse-temurin:21-jre-alpine
 
 RUN addgroup -S app && adduser -S app -G app
+
 USER app
 WORKDIR /application
 
