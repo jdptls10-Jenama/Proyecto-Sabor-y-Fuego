@@ -1,5 +1,8 @@
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+/* =========================================
+   CONFIGURACIÓN GENERAL
+========================================= */
 
 html {
     scroll-behavior: smooth;
@@ -16,6 +19,10 @@ vaadin-vertical-layout {
     box-sizing: border-box;
 }
 
+/* =========================================
+   PÁGINA PRINCIPAL Y NAVEGACIÓN
+========================================= */
+
 .restaurant-page {
     width: 100%;
     min-height: 100vh;
@@ -25,54 +32,97 @@ vaadin-vertical-layout {
 .restaurant-header {
     width: 100%;
     min-height: 82px;
-    padding: 0 7%;
+    padding: 22px 6%;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #171714;
-    color: #fff;
+    gap: 25px;
+    background: #111111;
+    color: #ffffff;
+    position: relative;
+    z-index: 10;
 }
 
 .restaurant-logo {
+    color: #d6ad60;
     font-family: 'Playfair Display', serif;
-    font-size: 27px;
+    font-size: 23px;
+    font-weight: 800;
     letter-spacing: 2px;
-    color: #d6b36a;
-    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .restaurant-nav {
     display: flex;
-    gap: 30px;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
-.restaurant-nav a {
-    color: #eee9df;
+.restaurant-nav a,
+.nav-link {
+    color: #ffffff;
     text-decoration: none;
     font-size: 14px;
-    transition: color .2s;
+    transition: color .2s ease;
 }
 
-.restaurant-nav a:hover {
-    color: #d6b36a;
+.restaurant-nav a:hover,
+.nav-link:hover {
+    color: #d6ad60;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.login-button {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-button:hover {
+    color: #d6ad60;
 }
 
 .gold-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 12px 22px !important;
     background: #c6a15b !important;
     color: #171714 !important;
     border-radius: 3px !important;
     font-weight: 700 !important;
-    padding: 12px 22px !important;
+    text-decoration: none;
+    transition: background .25s ease;
 }
+
+.gold-button:hover {
+    background: #e0c17e !important;
+}
+
+.header-actions .gold-button {
+    white-space: nowrap;
+}
+
+/* =========================================
+   PORTADA
+========================================= */
 
 .restaurant-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 520px;
     background: #201e19;
-    color: white;
+    color: #ffffff;
 }
 
 .hero-content {
@@ -90,18 +140,18 @@ vaadin-vertical-layout {
 }
 
 .hero-title {
+    margin: 22px 0;
+    color: #ffffff;
     font-family: 'Playfair Display', serif;
     font-size: clamp(38px, 4vw, 64px);
     line-height: 1.13;
-    margin: 22px 0;
-    color: #fff;
 }
 
 .hero-description {
+    max-width: 470px;
     color: #d0ccc3;
     font-size: 16px;
     line-height: 1.8;
-    max-width: 470px;
 }
 
 .hero-image {
@@ -111,6 +161,10 @@ vaadin-vertical-layout {
     object-fit: cover;
 }
 
+/* =========================================
+   MENÚ Y TARJETAS DE PRODUCTOS
+========================================= */
+
 .menu-section {
     padding: 75px 7%;
     box-sizing: border-box;
@@ -118,16 +172,16 @@ vaadin-vertical-layout {
 
 .section-label {
     color: #a47b35;
-    letter-spacing: 3px;
     font-size: 12px;
     font-weight: 700;
+    letter-spacing: 3px;
 }
 
 .section-title {
+    margin: 12px 0;
+    color: #24221e;
     font-family: 'Playfair Display', serif;
     font-size: 42px;
-    color: #24221e;
-    margin: 12px 0;
 }
 
 .section-description {
@@ -143,32 +197,64 @@ vaadin-vertical-layout {
 }
 
 .food-card {
-    background: #fff;
-    border-radius: 8px;
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100%;
+    height: 520px !important;
+    min-height: 520px !important;
+    max-height: 520px !important;
     overflow: hidden;
-    box-shadow: 0 5px 24px rgba(0,0,0,.06);
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 5px 24px rgba(0, 0, 0, .06);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.food-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
 }
 
 .food-image {
+    display: block;
     width: 100%;
-    height: 220px;
+    height: 220px !important;
+    min-height: 220px;
+    max-height: 220px;
     object-fit: cover;
+    flex-shrink: 0;
 }
 
 .food-content {
-    padding: 22px;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    width: 100%;
+    min-height: 0;
+    padding: 18px;
+    box-sizing: border-box;
 }
 
 .food-name {
+    min-height: 55px;
+    max-height: 55px;
+    margin: 0 0 10px;
+    overflow: hidden;
     font-family: 'Playfair Display', serif;
     font-size: 22px;
-    margin: 0 0 10px;
 }
 
 .food-description {
+    display: -webkit-box;
+    min-height: 60px;
+    max-height: 60px;
+    overflow: hidden;
     color: #77736c;
-    line-height: 1.6;
     font-size: 14px;
+    line-height: 1.6;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 
 .food-price {
@@ -177,11 +263,562 @@ vaadin-vertical-layout {
     font-weight: 700;
 }
 
+.food-availability {
+    display: block;
+    margin-top: 12px;
+    color: #34734a;
+    font-size: 13px;
+}
+
+.food-content .gold-button {
+    width: 100%;
+    margin-top: auto !important;
+    flex-shrink: 0;
+}
+
+.producto-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 500px;
+    min-height: 500px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.producto-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+}
+
+.producto-card .producto-contenido,
+.producto-contenido {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+}
+
+.producto-contenido p {
+    min-height: 48px;
+}
+
+.producto-contenido .gold-button,
+.producto-card .gold-button {
+    align-self: stretch;
+    margin-top: auto;
+}
+
+.empty-menu {
+    margin-top: 25px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+/* =========================================
+   NOSOTROS Y PIE DE PÁGINA
+========================================= */
+
+.about-section {
+    padding: 85px 10%;
+    background: #ffffff;
+    text-align: center;
+}
+
+.about-section h2 {
+    margin: 15px 0;
+    color: #171717;
+    font-size: 32px;
+}
+
+.about-section p {
+    max-width: 750px;
+    margin: 0 auto;
+    color: #666666;
+    line-height: 1.8;
+}
+
 .restaurant-footer {
     padding: 35px 7%;
     background: #171714;
     color: #d6b36a;
     text-align: center;
+}
+
+/* =========================================
+   AUTENTICACIÓN Y REGISTRO
+========================================= */
+
+.auth-page,
+.registro-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    background:
+            linear-gradient(rgba(0, 0, 0, .82), rgba(0, 0, 0, .88)),
+            url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80");
+    background-position: center;
+    background-size: cover;
+}
+
+.auth-formulario,
+.registro-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 440px;
+    padding: 45px;
+    box-sizing: border-box;
+    background: #171717;
+    border: 1px solid #a98743;
+    border-radius: 14px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, .55);
+}
+
+.auth-formulario h2,
+.registro-formulario h2 {
+    margin: 0;
+    color: #d6ad60;
+    font-size: 30px;
+    text-align: center;
+}
+
+.auth-formulario p,
+.registro-formulario p {
+    margin: 0 0 12px;
+    color: #cccccc;
+    text-align: center;
+}
+
+.auth-formulario a,
+.registro-formulario a {
+    color: #d6ad60;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.auth-formulario a:hover,
+.registro-formulario a:hover {
+    color: #ffffff;
+}
+
+.auth-button,
+.registro-formulario vaadin-button {
+    min-height: 45px;
+    background: #c49a4a;
+    color: #111111;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-button:hover,
+.registro-formulario vaadin-button:hover {
+    background: #e0bb70;
+}
+
+.auth-formulario vaadin-text-field,
+.auth-formulario vaadin-email-field,
+.auth-formulario vaadin-password-field,
+.registro-formulario vaadin-text-field,
+.registro-formulario vaadin-email-field,
+.registro-formulario vaadin-password-field {
+    --vaadin-input-field-background: #252525;
+    --vaadin-input-field-border-color: #555555;
+    --vaadin-input-field-label-color: #d6ad60;
+    --vaadin-input-field-value-color: #ffffff;
+    --vaadin-input-field-placeholder-color: #aaaaaa;
+}
+
+vaadin-text-field.registro-campo::part(label),
+vaadin-email-field.registro-campo::part(label),
+vaadin-password-field.registro-campo::part(label) {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+vaadin-text-field.registro-campo::part(input-field),
+vaadin-email-field.registro-campo::part(input-field),
+vaadin-password-field.registro-campo::part(input-field) {
+    background: rgba(255, 255, 255, .08) !important;
+    border: 1px solid #d4a017 !important;
+    border-radius: 10px !important;
+}
+
+vaadin-text-field.registro-campo::part(value),
+vaadin-email-field.registro-campo::part(value),
+vaadin-password-field.registro-campo::part(value) {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+vaadin-text-field.registro-campo:focus-within::part(input-field),
+vaadin-email-field.registro-campo:focus-within::part(input-field),
+vaadin-password-field.registro-campo:focus-within::part(input-field) {
+    border-color: #ffe066 !important;
+    box-shadow: 0 0 10px rgba(212, 160, 23, .35);
+}
+
+/* =========================================
+   CARRITO DE COMPRAS
+========================================= */
+
+.carrito-page {
+    min-height: 100vh;
+    padding: 60px 8%;
+    box-sizing: border-box;
+    background: #111111;
+    color: #ffffff;
+}
+
+.carrito-titulo {
+    margin-bottom: 35px;
+    color: #d6ad60;
+    font-size: 38px;
+}
+
+.carrito-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.carrito-producto {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 18px;
+    padding: 25px;
+    background: #202020;
+    border: 1px solid #444444;
+    border-radius: 10px;
+}
+
+.carrito-producto h2 {
+    margin: 0;
+    color: #d6ad60;
+}
+
+.carrito-producto span {
+    color: #ffffff;
+}
+
+.carrito-total {
+    display: block;
+    margin-top: 35px;
+    color: #d6ad60;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.carrito-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.carrito-acciones vaadin-button {
+    background: #d6ad60;
+    color: #111111;
+    font-weight: bold;
+}
+
+/* =========================================
+   FINALIZAR COMPRA
+========================================= */
+
+.finalizar-compra-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 65px 20px;
+    box-sizing: border-box;
+    background: radial-gradient(circle at top, #292116 0%, #111111 50%, #080808 100%);
+    color: #ffffff;
+}
+
+.checkout-card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 650px;
+    padding: 45px;
+    box-sizing: border-box;
+    background: #1b1b1b;
+    border: 1px solid #9c793d;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, .55);
+}
+
+.checkout-etiqueta {
+    color: #d6ad60;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.checkout-title {
+    margin: 0;
+    color: #e0b866;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.checkout-description {
+    margin: 0;
+    color: #bdbdbd;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.checkout-subtitle {
+    margin: 10px 0 0;
+    padding-bottom: 12px;
+    color: #ffffff;
+    border-bottom: 1px solid #49402f;
+    font-size: 21px;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+}
+
+.checkout-field {
+    width: 100%;
+}
+
+.checkout-field::part(label) {
+    padding-bottom: 8px;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.checkout-field::part(input-field) {
+    background: rgba(255, 255, 255, .08) !important;
+    border: 1px solid #d4a017 !important;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+.checkout-field::part(value) {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.checkout-field::part(value)::placeholder {
+    color: #c8c8c8 !important;
+    opacity: 1 !important;
+}
+
+.checkout-field:focus-within::part(input-field) {
+    border: 1px solid #ffe066 !important;
+    box-shadow: 0 0 10px rgba(212, 160, 23, .35);
+}
+
+.checkout-nota {
+    margin: 0;
+    color: #d4a017 !important;
+    font-size: 13px;
+    font-weight: 700 !important;
+    line-height: 1.6;
+    text-align: center;
+}
+
+vaadin-button.checkout-submit,
+.checkout-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 55px;
+    margin-top: 5px;
+    padding: 14px 25px !important;
+    background: linear-gradient(135deg, #ffe066, #d4a017) !important;
+    color: #111111 !important;
+    border: 2px solid #f5d76e !important;
+    border-radius: 14px !important;
+    box-shadow: 0 5px 20px rgba(212, 160, 23, .45);
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    transition: all .25s ease;
+    cursor: pointer;
+}
+
+vaadin-button.checkout-submit:hover,
+.checkout-submit:hover {
+    background: linear-gradient(135deg, #ffed91, #e6b82e) !important;
+    color: #000000 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 160, 23, .65);
+}
+
+.checkout-link {
+    color: #d6ad60;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.checkout-link:hover {
+    color: #f0cb7e;
+    text-decoration: underline;
+}
+
+a.checkout-submit {
+    display: flex;
+    width: 100%;
+    min-height: 55px;
+    margin-top: 12px;
+    padding: 14px 25px !important;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkout-whatsapp {
+    min-height: 55px;
+    margin-top: 12px;
+    background: #25d366 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    transition: all .25s ease;
+    cursor: pointer;
+}
+
+.checkout-whatsapp:hover {
+    background: #1ebe5d !important;
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 18px rgba(37, 211, 102, .35);
+}
+
+/* =========================================
+   BOTONES DE FILTRO DEL MENÚ
+========================================= */
+
+vaadin-button.menu-filter-button,
+vaadin-button.menu-filter-option {
+    color: #000000 !important;
+    --lumo-primary-text-color: #000000;
+    --lumo-body-text-color: #000000;
+}
+
+vaadin-button.menu-filter-button::part(button),
+vaadin-button.menu-filter-option::part(button) {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+vaadin-button.menu-filter-button::part(button):hover,
+vaadin-button.menu-filter-option::part(button):hover {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+/* =========================================
+   ADMINISTRACIÓN DE PRODUCTOS
+   Los estilos quedan limitados a los campos
+   que reciben la clase producto-admin-campo.
+========================================= */
+
+/* Evita el fondo azul en la zona completa del componente y su etiqueta. */
+.producto-admin-campo {
+    display: block;
+    background: transparent !important;
+
+    --vaadin-input-field-background: #252525;
+    --vaadin-input-field-border-color: #555555;
+    --vaadin-input-field-value-color: #ffffff;
+    --vaadin-input-field-label-color: #d6ad55;
+    --vaadin-input-field-placeholder-color: #aaaaaa;
+    --vaadin-focus-ring-color: transparent;
+
+    --lumo-primary-color: #d6ad55;
+    --lumo-primary-color-50pct: rgba(214, 173, 85, .5);
+    --lumo-primary-color-10pct: rgba(214, 173, 85, .1);
+    --lumo-focus-ring-color: transparent;
+}
+
+.producto-admin-campo::part(label) {
+    background: transparent !important;
+    color: #d6ad55 !important;
+}
+
+.producto-admin-campo::part(input-field) {
+    background: #252525 !important;
+    border: 1px solid #555555 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.producto-admin-campo:focus-within::part(input-field) {
+    background: #252525 !important;
+    border: 1px solid #d6ad55 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.producto-admin-campo::part(value) {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.producto-admin-campo::part(value)::placeholder {
+    color: #aaaaaa !important;
+    opacity: 1 !important;
+}
+
+/* Tabla de productos: tema oscuro y detalles dorados. */
+vaadin-grid {
+    --lumo-base-color: #1b1b1b;
+    --lumo-body-text-color: #ffffff;
+    --lumo-header-text-color: #d6ad55;
+    --lumo-primary-text-color: #d6ad55;
+    --lumo-primary-color: #d6ad55;
+    --lumo-primary-color-10pct: rgba(214, 173, 85, .1);
+}
+
+vaadin-grid::part(row):hover {
+    background-color: rgba(214, 173, 85, .08);
+}
+
+vaadin-grid::part(cell) {
+    border-color: #383838;
+}
+
+/* =========================================
+   DISEÑO RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+    .restaurant-header {
+        flex-wrap: wrap;
+    }
+
+    .restaurant-nav {
+        gap: 15px;
+    }
 }
 
 @media (max-width: 800px) {
@@ -197,68 +834,6 @@ vaadin-vertical-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .restaurant-nav {
-        gap: 12px;
-    }
-}
-
-@media (max-width: 550px) {
-    .menu-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .restaurant-header {
-        padding: 20px;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .restaurant-nav {
-        flex-wrap: wrap;
-    }
-}
-/* Ajustes del encabezado y botones */
-
-.restaurant-logo {
-    text-decoration: none;
-}
-
-.gold-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    text-decoration: none;
-    transition: background .25s ease;
-    box-sizing: border-box;
-}
-
-.gold-button:hover {
-    background: #e0c17e;
-}
-
-.restaurant-header {
-    gap: 24px;
-}
-
-.restaurant-nav {
-    flex-wrap: wrap;
-}
-
-.food-card {
-    transition: transform .25s ease, box-shadow .25s ease;
-}
-
-.food-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, .12);
-}
-
-.food-image {
-    display: block;
-}
-
-@media (max-width: 800px) {
     .restaurant-header {
         flex-wrap: wrap;
     }
@@ -266,115 +841,7 @@ vaadin-vertical-layout {
     .restaurant-nav {
         order: 3;
         width: 100%;
-    }
-}
-
-/* NAVEGACIÓN SUPERIOR */
-
-.restaurant-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 25px;
-    padding: 22px 6%;
-    background: #111111;
-    position: relative;
-    z-index: 10;
-}
-
-.restaurant-logo {
-    color: #d6ad60;
-    font-size: 23px;
-    font-weight: 800;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.restaurant-nav {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.nav-link {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.2s;
-}
-
-.nav-link:hover {
-    color: #d6ad60;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.login-button {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.login-button:hover {
-    color: #d6ad60;
-}
-
-.header-actions .gold-button {
-    white-space: nowrap;
-}
-
-/* SECCIÓN NOSOTROS */
-
-.about-section {
-    padding: 85px 10%;
-    text-align: center;
-    background: #ffffff;
-}
-
-.about-section h2 {
-    color: #171717;
-    font-size: 32px;
-    margin: 15px 0;
-}
-
-.about-section p {
-    color: #666666;
-    max-width: 750px;
-    margin: 0 auto;
-    line-height: 1.8;
-}
-
-/* MENÚ VACÍO */
-
-.empty-menu {
-    background: #ffffff;
-    padding: 35px;
-    border-radius: 8px;
-    margin-top: 25px;
-}
-
-/* DISPONIBILIDAD */
-
-.food-availability {
-    display: block;
-    margin-top: 12px;
-    font-size: 13px;
-    color: #34734a;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 900px) {
-    .restaurant-header {
-        flex-wrap: wrap;
-    }
-
-    .restaurant-nav {
-        gap: 15px;
+        gap: 12px;
     }
 }
 
@@ -393,413 +860,6 @@ vaadin-vertical-layout {
     }
 }
 
-/* PANTALLAS DE AUTENTICACION */
-
-.auth-page,
-.registro-page {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    box-sizing: border-box;
-    background:
-            linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.88)),
-            url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80");
-    background-size: cover;
-    background-position: center;
-}
-
-.auth-formulario,
-.registro-formulario {
-    width: 100%;
-    max-width: 440px;
-    box-sizing: border-box;
-    padding: 45px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    background: #171717;
-    border: 1px solid #a98743;
-    border-radius: 14px;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.55);
-}
-
-.auth-formulario h2,
-.registro-formulario h2 {
-    color: #d6ad60;
-    text-align: center;
-    font-size: 30px;
-    margin: 0;
-}
-
-.auth-formulario p,
-.registro-formulario p {
-    color: #cccccc;
-    text-align: center;
-    margin: 0 0 12px;
-}
-
-.auth-formulario a,
-.registro-formulario a {
-    color: #d6ad60;
-    text-align: center;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.auth-formulario a:hover,
-.registro-formulario a:hover {
-    color: white;
-}
-
-.auth-button,
-.registro-formulario vaadin-button {
-    background: #c49a4a;
-    color: #111111;
-    font-weight: bold;
-    border-radius: 7px;
-    min-height: 45px;
-    cursor: pointer;
-}
-
-.auth-button:hover,
-.registro-formulario vaadin-button:hover {
-    background: #e0bb70;
-}
-
-.auth-formulario vaadin-text-field,
-.auth-formulario vaadin-email-field,
-.auth-formulario vaadin-password-field,
-.registro-formulario vaadin-text-field,
-.registro-formulario vaadin-email-field,
-.registro-formulario vaadin-password-field {
-    --vaadin-input-field-background: #252525;
-    --vaadin-input-field-border-color: #555555;
-    --vaadin-input-field-label-color: #d6ad60;
-    --vaadin-input-field-value-color: white;
-    --vaadin-input-field-placeholder-color: #aaaaaa;
-}
-
-@media (max-width: 550px) {
-    .auth-formulario,
-    .registro-formulario {
-        padding: 28px 22px;
-    }
-}
-
-/* CARRITO DE COMPRAS */
-
-.carrito-page {
-    min-height: 100vh;
-    padding: 60px 8%;
-    box-sizing: border-box;
-    background: #111111;
-    color: white;
-}
-
-.carrito-titulo {
-    color: #d6ad60;
-    font-size: 38px;
-    margin-bottom: 35px;
-}
-
-.carrito-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-.carrito-producto {
-    background: #202020;
-    border: 1px solid #444;
-    border-radius: 10px;
-    padding: 25px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 18px;
-}
-
-.carrito-producto h2 {
-    color: #d6ad60;
-    margin: 0;
-}
-
-.carrito-producto span {
-    color: white;
-}
-
-.carrito-total {
-    display: block;
-    color: #d6ad60;
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 35px;
-}
-
-.carrito-acciones {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-    flex-wrap: wrap;
-}
-
-.carrito-acciones vaadin-button {
-    background: #d6ad60;
-    color: #111;
-    font-weight: bold;
-}
-/* Tarjetas de productos con altura uniforme */
-.producto-card {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 480px;
-    box-sizing: border-box;
-}
-
-/* Contenido de la tarjeta */
-.producto-card .producto-contenido {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-}
-
-/* Botón siempre abajo */
-.producto-card .gold-button {
-    margin-top: auto;
-    align-self: stretch;
-}
-/* Todas las tarjetas con el mismo tamaño */
-.producto-card {
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-    min-height: 500px;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-/* Imagen con altura uniforme */
-.producto-card img {
-    width: 100%;
-    height: 210px;
-    object-fit: cover;
-}
-
-/* Contenido de cada tarjeta */
-.producto-contenido {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-    width: 100%;
-}
-
-/* Descripción con espacio uniforme */
-.producto-contenido p {
-    min-height: 48px;
-}
-
-/* Botón siempre en la parte inferior */
-.producto-contenido .gold-button {
-    margin-top: auto;
-    align-self: stretch;
-}
-/* TARJETAS: TODAS DEL MISMO TAMAÑO */
-.food-card {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100%;
-    height: 520px !important;
-    min-height: 520px !important;
-    max-height: 520px !important;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-/* TODAS LAS IMÁGENES DEL MISMO TAMAÑO */
-.food-image {
-    display: block;
-    width: 100%;
-    height: 220px !important;
-    min-height: 220px;
-    max-height: 220px;
-    object-fit: cover;
-    flex-shrink: 0;
-}
-
-/* CONTENIDO DE LA TARJETA */
-.food-content {
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 !important;
-    min-height: 0;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 18px;
-}
-
-/* NOMBRE DEL PRODUCTO */
-.food-name {
-    min-height: 55px;
-    max-height: 55px;
-    overflow: hidden;
-}
-
-/* DESCRIPCIÓN */
-.food-description {
-    min-height: 60px;
-    max-height: 60px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-}
-
-/* BOTÓN SIEMPRE ABAJO */
-.food-content .gold-button {
-    margin-top: auto !important;
-    width: 100%;
-    flex-shrink: 0;
-}
-
-/* PÁGINA DE FINALIZAR COMPRA */
-.finalizar-compra-page {
-    min-height: 100vh;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 65px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:
-            radial-gradient(circle at top, #292116 0%, #111111 50%, #080808 100%);
-    color: #ffffff;
-}
-
-/* TARJETA PRINCIPAL */
-.checkout-card {
-    width: 100%;
-    max-width: 650px;
-    box-sizing: border-box;
-    padding: 45px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background: #1b1b1b;
-    border: 1px solid #9c793d;
-    border-radius: 18px;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.55);
-}
-
-/* ENCABEZADO */
-.checkout-etiqueta {
-    color: #d6ad60;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 3px;
-}
-
-.checkout-title {
-    color: #e0b866;
-    font-size: 36px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.checkout-description {
-    color: #bdbdbd;
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.checkout-subtitle {
-    color: #ffffff;
-    font-size: 21px;
-    margin: 10px 0 0;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #49402f;
-}
-
-/* CAMPOS DEL FORMULARIO */
-.checkout-form {
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-    width: 100%;
-}
-
-.checkout-field {
-    width: 100%;
-}
-
-.checkout-field::part(label) {
-    color: #d6ad60;
-    font-weight: 600;
-    font-size: 14px;
-    padding-bottom: 8px;
-}
-
-.checkout-field::part(input-field) {
-    background: #101010;
-    border: 1px solid #51452f;
-    border-radius: 9px;
-    box-shadow: none;
-}
-
-.checkout-field::part(input-field):focus-within {
-    border: 1px solid #d6ad60;
-}
-
-.checkout-field::part(value) {
-    color: #ffffff;
-}
-
-/* TEXTO INFORMATIVO */
-.checkout-nota {
-    color: #aaaaaa;
-    font-size: 13px;
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* BOTÓN CONFIRMAR */
-vaadin-button.checkout-submit {
-    width: 100%;
-    min-height: 52px;
-    margin-top: 5px;
-    background: linear-gradient(135deg, #e5bd70, #b58a3d);
-    color: #111111;
-    border: none;
-    border-radius: 9px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-vaadin-button.checkout-submit:hover {
-    background: #f0cb7e;
-}
-
-/* ENLACES */
-.checkout-link {
-    color: #d6ad60;
-    text-decoration: none;
-    font-size: 14px;
-    text-align: center;
-}
-
-.checkout-link:hover {
-    color: #f0cb7e;
-    text-decoration: underline;
-}
-
-/* PANTALLAS PEQUEÑAS */
 @media (max-width: 600px) {
     .finalizar-compra-page {
         padding: 25px 12px;
@@ -813,253 +873,53 @@ vaadin-button.checkout-submit:hover {
         font-size: 29px;
     }
 }
-vaadin-text-field,
-vaadin-text-area,
-vaadin-number-field,
-vaadin-email-field,
-vaadin-password-field {
-    --vaadin-input-field-value-color: #222222;
-    --vaadin-input-field-background: #ffffff;
-    --vaadin-input-field-placeholder-color: #777777;
+
+@media (max-width: 550px) {
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-header {
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .restaurant-nav {
+        flex-wrap: wrap;
+    }
+
+    .auth-formulario,
+    .registro-formulario {
+        padding: 28px 22px;
+    }
+}
+/* SELECTOR DE IMÁGENES - ADMINISTRACIÓN */
+
+vaadin-upload {
+    --lumo-primary-color: #D6AD55;
+    --lumo-primary-text-color: #D6AD55;
+    --lumo-primary-color-50pct: rgba(214, 173, 85, 0.5);
+    --lumo-primary-color-10pct: rgba(214, 173, 85, 0.1);
+    color: #FFFFFF;
 }
 
-vaadin-text-field::part(input-field),
-vaadin-text-area::part(input-field) {
-    background-color: #ffffff;
+vaadin-upload::part(primary-button) {
+    background: #D6AD55;
+    color: #111111;
+    border-radius: 7px;
+    font-weight: bold;
 }
 
-/* COLOR NEGRO FORZADO EN LOS BOTONES */
-
-vaadin-button.menu-filter-button,
-vaadin-button.menu-filter-option {
-    color: #000000 !important;
-    --lumo-primary-text-color: #000000;
-    --lumo-body-text-color: #000000;
+vaadin-upload::part(drop-label) {
+    color: #BBBBBB;
 }
 
-/* TEXTO INTERNO DE LOS BOTONES */
-
-vaadin-button.menu-filter-button::part(button),
-vaadin-button.menu-filter-option::part(button) {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+vaadin-upload::part(drop-label-icon) {
+    color: #D6AD55;
 }
-
-/* AL PASAR EL CURSOR */
-
-vaadin-button.menu-filter-button::part(button):hover,
-vaadin-button.menu-filter-option::part(button):hover {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
-}
-/* Letras blancas en los campos del formulario */
-vaadin-text-field.checkout-field::part(label),
-vaadin-text-area.checkout-field::part(label) {
-    color: white !important;
-}
-
-vaadin-text-field.checkout-field::part(value),
-vaadin-text-area.checkout-field::part(value) {
-    color: white !important;
-}
-
-vaadin-text-field.checkout-field::part(input-field),
-vaadin-text-area.checkout-field::part(input-field) {
-    color: white !important;
-}
-
-vaadin-text-field.checkout-field::part(value)::placeholder,
-vaadin-text-area.checkout-field::part(value)::placeholder {
-    color: rgba(255, 255, 255, 0.65) !important;
-}
-.checkout-submit {
-    background: linear-gradient(135deg, #ffe066, #d4a017) !important;
-    color: #111111 !important;
-    font-weight: 800 !important;
-    font-size: 17px !important;
-    border: 2px solid #f5d76e !important;
-    border-radius: 14px !important;
-    min-height: 55px;
-    padding: 14px 25px !important;
-    box-shadow: 0 5px 20px rgba(212, 160, 23, 0.45);
-    transition: all 0.25s ease;
-    cursor: pointer;
-}
-
-.checkout-submit:hover {
-    background: linear-gradient(135deg, #ffed91, #e6b82e) !important;
-    color: #000000 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(212, 160, 23, 0.65);
-}
-/* =====================================
-   CAMPOS DE DIRECCIÓN, TELÉFONO Y NOTAS
-   ===================================== */
-
-/* Etiquetas de los campos */
-vaadin-text-field.checkout-field::part(label),
-vaadin-text-area.checkout-field::part(label) {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-}
-
-/* Fondo de los campos */
-vaadin-text-field.checkout-field::part(input-field),
-vaadin-text-area.checkout-field::part(input-field) {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid #d4a017 !important;
-    border-radius: 10px !important;
-}
-
-/* Letras que escribe el cliente */
-vaadin-text-field.checkout-field::part(value),
-vaadin-text-area.checkout-field::part(value) {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-}
-
-/* Texto de ejemplo o placeholder */
-vaadin-text-field.checkout-field::part(value)::placeholder,
-vaadin-text-area.checkout-field::part(value)::placeholder {
-    color: #c8c8c8 !important;
-    opacity: 1 !important;
-}
-
-/* Texto cuando el campo está seleccionado */
-vaadin-text-field.checkout-field:focus-within::part(input-field),
-vaadin-text-area.checkout-field:focus-within::part(input-field) {
-    border: 1px solid #ffe066 !important;
-    box-shadow: 0 0 10px rgba(212, 160, 23, 0.35);
-}
-
-
-/* =====================================
-   BOTÓN CONFIRMAR Y DESCARGAR FACTURA
-   ===================================== */
-
-.checkout-submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: linear-gradient(
-            135deg,
-            #ffe066,
-            #d4a017
-    ) !important;
-
-    color: #111111 !important;
-    font-weight: 800 !important;
-    font-size: 17px !important;
-
-    border: 2px solid #f5d76e !important;
-    border-radius: 14px !important;
-
-    min-height: 55px;
-    padding: 14px 25px !important;
-
-    box-shadow: 0 5px 20px rgba(212, 160, 23, 0.45);
-
-    text-decoration: none !important;
-
-    transition: all 0.25s ease;
-    cursor: pointer;
-}
-
-.checkout-submit:hover {
-    background: linear-gradient(
-            135deg,
-            #ffed91,
-            #e6b82e
-    ) !important;
-
-    color: #000000 !important;
-
-    transform: translateY(-3px);
-
-    box-shadow: 0 8px 25px rgba(212, 160, 23, 0.65);
-}
-
-
-/* =====================================
-   BOTÓN WHATSAPP
-   ===================================== */
-
-.checkout-whatsapp {
-    background: #25D366 !important;
-    color: #ffffff !important;
-
-    font-weight: 800 !important;
-    font-size: 17px !important;
-
-    border: none !important;
-    border-radius: 14px !important;
-
-    min-height: 55px;
-    margin-top: 12px;
-
-    transition: all 0.25s ease;
-    cursor: pointer;
-}
-
-.checkout-whatsapp:hover {
-    background: #1ebe5d !important;
-    color: #ffffff !important;
-
-    transform: translateY(-3px);
-
-    box-shadow: 0 5px 18px rgba(37, 211, 102, 0.35);
-}
-
-
-/* =====================================
-   MENSAJE PARA COMPARTIR LA FACTURA
-   ===================================== */
-
-.checkout-nota {
-    color: #d4a017 !important;
-    font-weight: 700 !important;
-    text-align: center;
-    margin-top: 18px;
-    line-height: 1.6;
-}
-a.checkout-submit {
-    display: flex;
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 55px;
-    align-items: center;
-    justify-content: center;
-    padding: 14px 25px !important;
-    margin-top: 12px;
-    font-size: 17px !important;
-}
-/* Campos del formulario de registro */
-vaadin-text-field.registro-campo::part(label),
-vaadin-email-field.registro-campo::part(label),
-vaadin-password-field.registro-campo::part(label) {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-}
-
-vaadin-text-field.registro-campo::part(input-field),
-vaadin-email-field.registro-campo::part(input-field),
-vaadin-password-field.registro-campo::part(input-field) {
-    background: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid #d4a017 !important;
-    border-radius: 10px !important;
-}
-
-vaadin-text-field.registro-campo::part(value),
-vaadin-email-field.registro-campo::part(value),
-vaadin-password-field.registro-campo::part(value) {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-}
-
-vaadin-text-field.registro-campo:focus-within::part(input-field),
-vaadin-email-field.registro-campo:focus-within::part(input-field),
-vaadin-password-field.registro-campo:focus-within::part(input-field) {
-    border-color: #ffe066 !important;
-    box-shadow: 0 0 10px rgba(212, 160, 23, 0.35);
+/* Formulario de administración de productos */
+@media (max-width: 750px) {
+    .productos-formulario-fila {
+        grid-template-columns: 1fr !important;
+    }
 }
