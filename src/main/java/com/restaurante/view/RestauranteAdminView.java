@@ -4,6 +4,7 @@ import com.restaurante.model.Producto;
 import com.restaurante.model.Restaurante;
 import com.restaurante.model.Usuario;
 import com.restaurante.service.ProductoService;
+import com.restaurante.service.CategoriaService;
 import com.restaurante.service.RestauranteService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -28,6 +29,7 @@ import java.math.BigDecimal;
 public class RestauranteAdminView extends VerticalLayout implements HasUrlParameter<String> {
     private final RestauranteService restauranteService;
     private final ProductoService productoService;
+    private final CategoriaService categoriaService;
     private Restaurante restaurante;
     private Usuario usuario;
     private final Grid<Producto> productos = new Grid<>(Producto.class, false);
@@ -47,9 +49,10 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
     private final IntegerField stock = new IntegerField("Existencias");
     private final TextField categoria = new TextField("Categoría");
 
-    public RestauranteAdminView(RestauranteService restauranteService, ProductoService productoService) {
+    public RestauranteAdminView(RestauranteService restauranteService, ProductoService productoService, CategoriaService categoriaService) {
         this.restauranteService = restauranteService;
         this.productoService = productoService;
+        this.categoriaService = categoriaService;
         setSizeFull();
         setPadding(true);
         setSpacing(true);
@@ -133,7 +136,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
                 .setHeader("Acciones").setAutoWidth(true);
         productos.setWidthFull();
         productos.setHeight("360px");
-        VerticalLayout seccion = new VerticalLayout(titulo, campos, productoDescripcion, agregar, productos);
+        VerticalLayout seccion = new VerticalLayout(titulo, new Paragraph("Las categorías se crean automáticamente al escribir un nombre nuevo en el campo Categoría."), campos, productoDescripcion, agregar, productos);
         seccion.getStyle().set("background", "#1B1B1B").set("padding", "20px")
                 .set("border-radius", "12px").set("border", "1px solid #393939");
         actualizarProductos();
@@ -153,6 +156,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
             p.setPrecio(precio.getValue());
             p.setStock(stock.getValue());
             p.setCategoria(categoria.getValue());
+            p.setCategoriaRelacion(categoriaService.obtenerOCrear(categoria.getValue(), restaurante.getId()));
             productoService.guardar(p, restaurante.getId());
             productoNombre.clear(); productoDescripcion.clear(); precio.clear();
             stock.clear(); categoria.clear();
