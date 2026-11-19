@@ -126,6 +126,11 @@ public class AdminView extends VerticalLayout {
                 event -> getUI().ifPresent(ui -> ui.navigate("reportes"))
         );
 
+        Button restaurantesButton = new Button(
+                "Administrar restaurantes",
+                event -> getUI().ifPresent(ui -> ui.navigate("plataforma/restaurantes"))
+        );
+
         Button cerrarSesion = new Button("Cerrar sesión", event -> {
 
             VaadinSession.getCurrent().setAttribute("usuarioActual", null);
@@ -136,7 +141,7 @@ public class AdminView extends VerticalLayout {
 
         estilizarBoton(pedidosButton);
         estilizarBoton(productosButton);
-        estilizarBoton(reportesButton);
+        estilizarBoton(reportesButton);\n        estilizarBoton(restaurantesButton);
 
         cerrarSesion.getStyle()
                 .set("background", "#333333")
