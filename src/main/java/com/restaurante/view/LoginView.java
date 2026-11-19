@@ -25,8 +25,11 @@ public class LoginView extends Div {
 
         H2 titulo = new H2("Bienvenido de nuevo");
 
+        String rutaPendiente = (String) VaadinSession.getCurrent().getAttribute("rutaDespuesLogin");
         Paragraph descripcion = new Paragraph(
-                "Ingresa a tu cuenta de Sabor & Fuego."
+                rutaPendiente != null && rutaPendiente.startsWith("restaurante/")
+                        ? "Inicia sesión para continuar en el restaurante que elegiste."
+                        : "Ingresa a tu cuenta para continuar."
         );
 
         EmailField correo = new EmailField("Correo electrónico");
