@@ -129,7 +129,6 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
         productoNombre.setWidthFull();
         productoDescripcion.setWidthFull();
         precio.setPrefixComponent(new com.vaadin.flow.component.html.Span("$"));
-        precio.setMin(BigDecimal.ZERO);
         stock.setMin(0);
         Button agregar = new Button("Agregar producto", e -> agregarProducto());
         HorizontalLayout campos = new HorizontalLayout(productoNombre, precio, stock, categoria);
@@ -195,7 +194,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
     private void agregarProducto() {
         try {
             if (productoNombre.isEmpty() || precio.isEmpty() || precio.getValue() == null
-                    || stock.getValue() == null) {
+                    || precio.getValue().compareTo(BigDecimal.ZERO) < 0 || stock.getValue() == null || stock.getValue() < 0) {
                 Notification.show("Completa nombre, precio y existencias.");
                 return;
             }
@@ -240,7 +239,9 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
         imagenEditar.setValue(producto.getImagenUrl() == null ? "" : producto.getImagenUrl());
         Button guardar = new Button("Guardar cambios", e -> {
             try {
-                if (nombreEditar.isEmpty() || precioEditar.getValue() == null || stockEditar.getValue() == null) {
+                if (nombreEditar.isEmpty() || precioEditar.getValue() == null
+                        || precioEditar.getValue().compareTo(BigDecimal.ZERO) < 0
+                        || stockEditar.getValue() == null || stockEditar.getValue() < 0) {
                     Notification.show("Completa nombre, precio y existencias.");
                     return;
                 }
