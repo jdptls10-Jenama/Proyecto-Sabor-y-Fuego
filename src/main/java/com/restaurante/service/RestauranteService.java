@@ -7,6 +7,7 @@ import com.restaurante.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.text.Normalizer;
+import java.net.URI;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -106,8 +107,15 @@ public class RestauranteService {
     private String validarUrlOpcional(String valor, String campo) {
         if (valor == null || valor.isBlank()) return null;
         String url = valor.trim();
-        if (!(url.startsWith("https://") || url.startsWith("http://"))) {
-            throw new IllegalArgumentException("La URL de " + campo + " debe comenzar por https:// o http://.");
+        try {
+            URI uri = URI.create(url);
+            if (!"https".equalsIgnoreCase(uri.getScheme()) || uri.getHost() == null
+                    || url.contains("\\'") || url.contains("\\\"")
+                    || url.contains("(") || url.contains(")") || url.contains("\\\\")) {
+                throw new IllegalArgumentException();
+            }
+        } catch (Exception ex) {
+            throw new IllegalArgumentException("La URL de " + campo + " debe ser una dirección HTTPS válida.");
         }
         return url;
     }
