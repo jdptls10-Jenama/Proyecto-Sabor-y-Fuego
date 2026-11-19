@@ -39,6 +39,9 @@ public class Producto {
     @Column(name = "imagen_tipo")
     private String imagenTipo;
 
+    @Column(name = "imagen_url", length = 1000)
+    private String imagenUrl;
+
     public Producto() {}
 
     public Producto(String nombre, String descripcion, BigDecimal precio, Integer stock) {
@@ -70,6 +73,8 @@ public class Producto {
     public void setImagen(byte[] imagen) { this.imagen = imagen; }
     public String getImagenTipo() { return imagenTipo; }
     public void setImagenTipo(String imagenTipo) { this.imagenTipo = imagenTipo; }
+    public String getImagenUrl() { return imagenUrl; }
+    public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
 
     @Override
     public String toString() {
