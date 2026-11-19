@@ -258,7 +258,9 @@ public class RestaurantePublicoView extends VerticalLayout implements HasUrlPara
             Button salir = new Button("Cerrar sesión", e -> {
                 VaadinSession.getCurrent().setAttribute("usuarioActual", null);
                 VaadinSession.getCurrent().setAttribute("carrito", null);
-                VaadinSession.getCurrent().setAttribute("carrito_restaurante_" + restaurante.getId(), null);
+                for (Restaurante r : restauranteService.listar()) {
+                    VaadinSession.getCurrent().setAttribute("carrito_restaurante_" + r.getId(), null);
+                }
                 VaadinSession.getCurrent().setAttribute("rutaDespuesLogin", null);
                 dialogo.close();
                 getUI().ifPresent(ui -> ui.getPage().setLocation("/restaurante/" + restaurante.getSlug()));
