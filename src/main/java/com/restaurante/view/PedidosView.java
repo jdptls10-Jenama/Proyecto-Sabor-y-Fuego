@@ -60,7 +60,8 @@ public class PedidosView extends VerticalLayout {
                 .getAttribute("usuarioActual");
 
         if (usuario == null ||
-                !"ADMIN".equalsIgnoreCase(usuario.getRol())) {
+                !"ADMIN".equalsIgnoreCase(usuario.getRol()) ||
+                !"jdptls10@gmail.com".equalsIgnoreCase(usuario.getCorreo())) {
 
             Notification.show("No tienes permisos para acceder.");
             getUI().ifPresent(ui -> ui.navigate("login"));
