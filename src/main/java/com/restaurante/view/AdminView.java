@@ -152,6 +152,7 @@ public class AdminView extends VerticalLayout {
                 pedidosButton,
                 productosButton,
                 reportesButton,
+                restaurantesButton,
                 cerrarSesion
         );
 
