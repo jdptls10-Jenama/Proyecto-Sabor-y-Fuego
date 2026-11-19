@@ -10,6 +10,7 @@ import com.restaurante.model.Pedido;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.restaurante.service.RestauranteService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
@@ -138,7 +139,9 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
         productos.addColumn(p -> p.getCategoria() == null ? "-" : p.getCategoria()).setHeader("Categoría").setAutoWidth(true);
         productos.addColumn(p -> p.getPrecio() == null ? "$0" : p.getPrecio().toString()).setHeader("Precio").setAutoWidth(true);
         productos.addColumn(Producto::getStock).setHeader("Stock").setAutoWidth(true);
-        productos.addComponentColumn(p -> new Button("Eliminar", e -> eliminarProducto(p)))
+        productos.addComponentColumn(p -> new HorizontalLayout(
+                new Button("Editar", e -> editarProducto(p)),
+                new Button("Eliminar", e -> eliminarProducto(p))))
                 .setHeader("Acciones").setAutoWidth(true);
         productos.setWidthFull();
         productos.setHeight("360px");
@@ -218,6 +221,55 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
         } catch (Exception ex) {
             Notification.show(ex.getMessage(), 5000, Notification.Position.MIDDLE);
         }
+    }
+
+    private void editarProducto(Producto producto) {
+        Dialog dialogo = new Dialog();
+        dialogo.setHeaderTitle("Editar producto");
+        TextField nombreEditar = new TextField("Nombre");
+        nombreEditar.setValue(producto.getNombre() == null ? "" : producto.getNombre());
+        TextArea descripcionEditar = new TextArea("Descripción");
+        descripcionEditar.setValue(producto.getDescripcion() == null ? "" : producto.getDescripcion());
+        BigDecimalField precioEditar = new BigDecimalField("Precio");
+        precioEditar.setValue(producto.getPrecio());
+        IntegerField stockEditar = new IntegerField("Existencias");
+        stockEditar.setValue(producto.getStock());
+        TextField categoriaEditar = new TextField("Categoría");
+        categoriaEditar.setValue(producto.getCategoria() == null ? "" : producto.getCategoria());
+        TextField imagenEditar = new TextField("URL de imagen HTTPS");
+        imagenEditar.setValue(producto.getImagenUrl() == null ? "" : producto.getImagenUrl());
+        Button guardar = new Button("Guardar cambios", e -> {
+            try {
+                if (nombreEditar.isEmpty() || precioEditar.getValue() == null || stockEditar.getValue() == null) {
+                    Notification.show("Completa nombre, precio y existencias.");
+                    return;
+                }
+                producto.setNombre(nombreEditar.getValue().trim());
+                producto.setDescripcion(descripcionEditar.getValue());
+                producto.setPrecio(precioEditar.getValue());
+                producto.setStock(stockEditar.getValue());
+                producto.setCategoria(categoriaEditar.getValue());
+                producto.setCategoriaRelacion(categoriaService.obtenerOCrear(categoriaEditar.getValue(), restaurante.getId()));
+                String url = imagenEditar.getValue() == null ? "" : imagenEditar.getValue().trim();
+                if (!url.isBlank() && (!url.startsWith("https://") || url.indexOf(34) >= 0
+                        || url.indexOf(39) >= 0 || url.indexOf(92) >= 0 || url.contains("(") || url.contains(")"))) {
+                    throw new IllegalArgumentException("La imagen debe tener una URL HTTPS válida.");
+                }
+                producto.setImagenUrl(url.isBlank() ? null : url);
+                productoService.guardar(producto, restaurante.getId());
+                dialogo.close();
+                actualizarProductos();
+                Notification.show("Producto actualizado.");
+            } catch (Exception ex) {
+                Notification.show(ex.getMessage(), 5000, Notification.Position.MIDDLE);
+            }
+        });
+        Button cancelar = new Button("Cancelar", e -> dialogo.close());
+        VerticalLayout formulario = new VerticalLayout(nombreEditar, descripcionEditar, precioEditar,
+                stockEditar, categoriaEditar, imagenEditar, new HorizontalLayout(guardar, cancelar));
+        formulario.setWidth("min(520px, 90vw)");
+        dialogo.add(formulario);
+        dialogo.open();
     }
 
     private void eliminarProducto(Producto producto) {
