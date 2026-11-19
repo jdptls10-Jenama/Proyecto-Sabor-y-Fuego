@@ -5,6 +5,9 @@ import com.restaurante.model.Restaurante;
 import com.restaurante.model.Usuario;
 import com.restaurante.service.ProductoService;
 import com.restaurante.service.CategoriaService;
+import com.restaurante.service.PedidoService;
+import com.restaurante.model.Pedido;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.restaurante.service.RestauranteService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -30,6 +33,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
     private final RestauranteService restauranteService;
     private final ProductoService productoService;
     private final CategoriaService categoriaService;
+    private final PedidoService pedidoService;
     private Restaurante restaurante;
     private Usuario usuario;
     private final Grid<Producto> productos = new Grid<>(Producto.class, false);
@@ -49,10 +53,11 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
     private final IntegerField stock = new IntegerField("Existencias");
     private final TextField categoria = new TextField("Categoría");
 
-    public RestauranteAdminView(RestauranteService restauranteService, ProductoService productoService, CategoriaService categoriaService) {
+    public RestauranteAdminView(RestauranteService restauranteService, ProductoService productoService, CategoriaService categoriaService, PedidoService pedidoService) {
         this.restauranteService = restauranteService;
         this.productoService = productoService;
         this.categoriaService = categoriaService;
+        this.pedidoService = pedidoService;
         setSizeFull();
         setPadding(true);
         setSpacing(true);
@@ -81,7 +86,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
         H2 encabezado = new H2("Administración · " + restaurante.getNombre());
         encabezado.getStyle().set("color", restaurante.getColorPrimario());
         add(encabezado, new Paragraph("Los cambios de esta pantalla afectan únicamente a este restaurante."),
-                crearSeccionPersonalizacion(), crearSeccionProductos());
+                crearSeccionPersonalizacion(), crearSeccionProductos(), crearSeccionPedidos());
         Button volver = new Button("Volver a la página pública",
                 e -> getUI().ifPresent(ui -> ui.navigate("restaurante/" + restaurante.getSlug())));
         add(volver);
@@ -141,6 +146,46 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
                 .set("border-radius", "12px").set("border", "1px solid #393939");
         actualizarProductos();
         return seccion;
+    }
+
+    private VerticalLayout crearSeccionPedidos() {
+        H2 titulo = new H2("Pedidos de este restaurante");
+        Grid<Pedido> tabla = new Grid<>(Pedido.class, false);
+        tabla.addColumn(Pedido::getId).setHeader("Pedido").setAutoWidth(true);
+        tabla.addColumn(p -> p.getUsuario() == null ? "-" : p.getUsuario().getNombre())
+                .setHeader("Cliente").setAutoWidth(true);
+        tabla.addColumn(p -> p.getFechaPedido() == null ? "-" : p.getFechaPedido().toString())
+                .setHeader("Fecha").setAutoWidth(true);
+        tabla.addColumn(p -> p.getTotal() == null ? "0" : p.getTotal().toString())
+                .setHeader("Total").setAutoWidth(true);
+        tabla.addColumn(Pedido::getEstado).setHeader("Estado").setAutoWidth(true);
+        tabla.addComponentColumn(pedido -> {
+            ComboBox<String> estado = new ComboBox<>();
+            estado.setItems("PENDIENTE", "EN_PREPARACION", "EN_CAMINO", "ENTREGADO");
+            estado.setValue(pedido.getEstado());
+            estado.setWidth("180px");
+            Button guardar = new Button("Actualizar", e -> {
+                try {
+                    pedidoService.actualizarEstado(pedido.getId(), estado.getValue(), restaurante.getId());
+                    actualizarPedidos(tabla);
+                    Notification.show("Estado del pedido actualizado.");
+                } catch (Exception ex) {
+                    Notification.show(ex.getMessage(), 5000, Notification.Position.MIDDLE);
+                }
+            });
+            return new HorizontalLayout(estado, guardar);
+        }).setHeader("Gestionar").setAutoWidth(true);
+        tabla.setWidthFull();
+        tabla.setHeight("360px");
+        VerticalLayout seccion = new VerticalLayout(titulo, tabla);
+        seccion.getStyle().set("background", "#1B1B1B").set("padding", "20px")
+                .set("border-radius", "12px").set("border", "1px solid #393939");
+        actualizarPedidos(tabla);
+        return seccion;
+    }
+
+    private void actualizarPedidos(Grid<Pedido> tabla) {
+        tabla.setItems(pedidoService.listarPedidos(restaurante.getId()));
     }
 
     private void agregarProducto() {
