@@ -135,9 +135,11 @@ public class RestaurantePublicoView extends VerticalLayout implements HasUrlPara
         tarjeta.getStyle().set("background", secundario).set("border", "1px solid #383838")
                 .set("border-radius", "14px").set("padding", "16px")
                 .set("display", "flex").set("flex-direction", "column").set("gap", "10px");
-        if (producto.getImagen() != null && producto.getImagen().length > 0) {
-            String tipo = producto.getImagenTipo() == null ? "image/jpeg" : producto.getImagenTipo();
-            Image imagen = new Image("data:" + tipo + ";base64," + Base64.getEncoder().encodeToString(producto.getImagen()), producto.getNombre());
+        if ((producto.getImagen() != null && producto.getImagen().length > 0) || producto.getImagenUrl() != null) {
+            String fuente = producto.getImagen() != null && producto.getImagen().length > 0
+                    ? "data:" + (producto.getImagenTipo() == null ? "image/jpeg" : producto.getImagenTipo()) + ";base64," + Base64.getEncoder().encodeToString(producto.getImagen())
+                    : producto.getImagenUrl();
+            Image imagen = new Image(fuente, producto.getNombre());
             imagen.setWidthFull(); imagen.setHeight("160px");
             imagen.getStyle().set("object-fit", "cover").set("border-radius", "9px");
             tarjeta.add(imagen);
