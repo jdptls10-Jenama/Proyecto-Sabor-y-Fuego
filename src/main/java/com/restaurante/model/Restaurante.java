@@ -21,6 +21,10 @@ public class Restaurante {
     @Column(nullable = false, unique = true, length = 80)
     private String slug;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "administrador_id")
+    private Usuario administrador;
+
     @Column(name = "logo_url", length = 1000)
     private String logoUrl;
 
@@ -48,8 +52,7 @@ public class Restaurante {
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
 
-    public Restaurante() {
-    }
+    public Restaurante() {}
 
     public Restaurante(String nombre, String slug) {
         this.nombre = nombre;
@@ -58,18 +61,10 @@ public class Restaurante {
 
     @PrePersist
     public void antesDeGuardar() {
-        if (fechaCreacion == null) {
-            fechaCreacion = LocalDateTime.now();
-        }
-        if (colorPrimario == null || colorPrimario.isBlank()) {
-            colorPrimario = "#D6AD55";
-        }
-        if (colorSecundario == null || colorSecundario.isBlank()) {
-            colorSecundario = "#101010";
-        }
-        if (colorFondo == null || colorFondo.isBlank()) {
-            colorFondo = "#101010";
-        }
+        if (fechaCreacion == null) fechaCreacion = LocalDateTime.now();
+        if (colorPrimario == null || colorPrimario.isBlank()) colorPrimario = "#D6AD55";
+        if (colorSecundario == null || colorSecundario.isBlank()) colorSecundario = "#101010";
+        if (colorFondo == null || colorFondo.isBlank()) colorFondo = "#101010";
     }
 
     public Long getId() { return id; }
@@ -77,6 +72,8 @@ public class Restaurante {
     public void setNombre(String nombre) { this.nombre = nombre; }
     public String getSlug() { return slug; }
     public void setSlug(String slug) { this.slug = slug; }
+    public Usuario getAdministrador() { return administrador; }
+    public void setAdministrador(Usuario administrador) { this.administrador = administrador; }
     public String getLogoUrl() { return logoUrl; }
     public void setLogoUrl(String logoUrl) { this.logoUrl = logoUrl; }
     public String getColorPrimario() { return colorPrimario; }
