@@ -110,8 +110,8 @@ public class RestauranteService {
         try {
             URI uri = URI.create(url);
             if (!"https".equalsIgnoreCase(uri.getScheme()) || uri.getHost() == null
-                    || url.contains("\\'") || url.contains("\\\"")
-                    || url.contains("(") || url.contains(")") || url.contains("\\\\")) {
+                    || url.indexOf(39) >= 0 || url.indexOf(34) >= 0
+                    || url.contains("(") || url.contains(")") || url.indexOf(92) >= 0) {
                 throw new IllegalArgumentException();
             }
         } catch (Exception ex) {
