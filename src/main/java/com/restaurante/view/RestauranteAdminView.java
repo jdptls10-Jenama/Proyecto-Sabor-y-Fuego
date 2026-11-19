@@ -52,6 +52,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
     private final BigDecimalField precio = new BigDecimalField("Precio");
     private final IntegerField stock = new IntegerField("Existencias");
     private final TextField categoria = new TextField("Categoría");
+    private final TextField imagenProducto = new TextField("URL de imagen del producto");
 
     public RestauranteAdminView(RestauranteService restauranteService, ProductoService productoService, CategoriaService categoriaService, PedidoService pedidoService) {
         this.restauranteService = restauranteService;
@@ -141,7 +142,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
                 .setHeader("Acciones").setAutoWidth(true);
         productos.setWidthFull();
         productos.setHeight("360px");
-        VerticalLayout seccion = new VerticalLayout(titulo, new Paragraph("Las categorías se crean automáticamente al escribir un nombre nuevo en el campo Categoría."), campos, productoDescripcion, agregar, productos);
+        VerticalLayout seccion = new VerticalLayout(titulo, new Paragraph("Las categorías se crean automáticamente al escribir un nombre nuevo en el campo Categoría."), campos, productoDescripcion, imagenProducto, agregar, productos);
         seccion.getStyle().set("background", "#1B1B1B").set("padding", "20px")
                 .set("border-radius", "12px").set("border", "1px solid #393939");
         actualizarProductos();
@@ -201,10 +202,17 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
             p.setPrecio(precio.getValue());
             p.setStock(stock.getValue());
             p.setCategoria(categoria.getValue());
+            if (!imagenProducto.isEmpty()) {
+                String urlImagen = imagenProducto.getValue().trim();
+                if (!urlImagen.startsWith("https://") || urlImagen.contains("\\\"") || urlImagen.contains("\\'") || urlImagen.contains("(") || urlImagen.contains(")")) {
+                    throw new IllegalArgumentException("La imagen debe tener una URL HTTPS válida.");
+                }
+                p.setImagenUrl(urlImagen);
+            }
             p.setCategoriaRelacion(categoriaService.obtenerOCrear(categoria.getValue(), restaurante.getId()));
             productoService.guardar(p, restaurante.getId());
             productoNombre.clear(); productoDescripcion.clear(); precio.clear();
-            stock.clear(); categoria.clear();
+            stock.clear(); categoria.clear(); imagenProducto.clear();
             actualizarProductos();
             Notification.show("Producto agregado.");
         } catch (Exception ex) {
