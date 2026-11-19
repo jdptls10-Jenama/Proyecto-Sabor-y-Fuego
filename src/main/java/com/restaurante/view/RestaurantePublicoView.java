@@ -222,7 +222,7 @@ public class RestaurantePublicoView extends VerticalLayout implements HasUrlPara
         Button confirmar = boton("Confirmar pedido", restaurante.getColorPrimario(), "#111111");
         confirmar.addClickListener(e -> {
             try {
-                PedidoServiceResult.crear(pedidoService, usuario, direccion.getValue(), telefono.getValue(),
+                pedidoService.crearPedido(usuario, direccion.getValue(), telefono.getValue(),
                         observaciones.getValue(), obtenerCarrito(), restaurante.getId());
                 obtenerCarrito().clear();
                 dialogo.close();
@@ -242,6 +242,7 @@ public class RestaurantePublicoView extends VerticalLayout implements HasUrlPara
         Usuario usuario = (Usuario) VaadinSession.getCurrent().getAttribute("usuarioActual");
         VerticalLayout opciones = new VerticalLayout();
         if (usuario == null) {
+            VaadinSession.getCurrent().setAttribute("rutaDespuesLogin", "restaurante/" + restaurante.getSlug());
             opciones.add(new Anchor("/login", "Iniciar sesión"), new Anchor("/registro", "Crear cuenta"));
         } else {
             opciones.add(new Paragraph(usuario.getNombre()), new Paragraph(usuario.getCorreo()));
@@ -267,10 +268,4 @@ public class RestaurantePublicoView extends VerticalLayout implements HasUrlPara
         return b;
     }
 
-    private static class PedidoServiceResult {
-        static void crear(PedidoService service, Usuario usuario, String direccion, String telefono,
-                          String observaciones, Map<Long, Integer> carrito, Long restauranteId) {
-            service.crearPedido(usuario, direccion, telefono, observaciones, carrito, restauranteId);
-        }
-    }
 }
