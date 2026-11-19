@@ -11,6 +11,8 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     Optional<Restaurante> findBySlugAndActivoTrue(String slug);
     @EntityGraph(attributePaths = "administrador")
     Optional<Restaurante> findBySlug(String slug);
+    @EntityGraph(attributePaths = "administrador")
+    Optional<Restaurante> findFirstByAdministrador_IdOrderByNombreAsc(Long administradorId);
     boolean existsBySlug(String slug);
     @EntityGraph(attributePaths = "administrador")
     List<Restaurante> findAllByOrderByNombreAsc();
