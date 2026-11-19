@@ -11,6 +11,16 @@ import java.util.Optional;
 
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
+    // Consultas aisladas por restaurante.
+    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto"})
+    List<Pedido> findAllByRestaurante_IdOrderByFechaPedidoDesc(Long restauranteId);
+
+    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto"})
+    List<Pedido> findByRestaurante_IdAndEstadoOrderByFechaPedidoDesc(Long restauranteId, String estado);
+
+    @EntityGraph(attributePaths = {"usuario", "detalles", "detalles.producto"})
+    List<Pedido> findByIdAndRestaurante_Id(Long pedidoId, Long restauranteId);
+
     // Consultar pedidos de un cliente
     @EntityGraph(attributePaths = {
             "usuario",
