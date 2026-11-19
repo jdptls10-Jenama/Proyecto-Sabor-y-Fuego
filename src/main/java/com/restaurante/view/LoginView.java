@@ -29,7 +29,9 @@ public class LoginView extends Div {
 
         String rutaPendiente = (String) VaadinSession.getCurrent().getAttribute("rutaDespuesLogin");
         Paragraph descripcion = new Paragraph(
-                rutaPendiente != null && rutaPendiente.startsWith("restaurante/")
+                rutaPendiente != null && (rutaPendiente.startsWith("restaurante/")
+                        || rutaPendiente.startsWith("restaurante-pedidos/")
+                        || rutaPendiente.startsWith("restaurante-admin/"))
                         ? "Inicia sesión para continuar en el restaurante que elegiste."
                         : "Ingresa a tu cuenta para continuar."
         );
