@@ -204,7 +204,7 @@ public class RestauranteAdminView extends VerticalLayout implements HasUrlParame
             p.setCategoria(categoria.getValue());
             if (!imagenProducto.isEmpty()) {
                 String urlImagen = imagenProducto.getValue().trim();
-                if (!urlImagen.startsWith("https://") || urlImagen.contains("\\\"") || urlImagen.contains("\\'") || urlImagen.contains("(") || urlImagen.contains(")")) {
+                if (!urlImagen.startsWith("https://") || urlImagen.indexOf(34) >= 0 || urlImagen.indexOf(39) >= 0 || urlImagen.indexOf(92) >= 0 || urlImagen.contains("(") || urlImagen.contains(")")) {
                     throw new IllegalArgumentException("La imagen debe tener una URL HTTPS válida.");
                 }
                 p.setImagenUrl(urlImagen);
