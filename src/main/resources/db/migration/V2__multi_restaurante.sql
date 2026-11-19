@@ -18,12 +18,17 @@ CREATE TABLE IF NOT EXISTS restaurantes (
     fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+ALTER TABLE restaurantes ADD COLUMN IF NOT EXISTS administrador_id BIGINT;
 ALTER TABLE categorias ADD COLUMN IF NOT EXISTS restaurante_id BIGINT;
 ALTER TABLE productos ADD COLUMN IF NOT EXISTS restaurante_id BIGINT;
 ALTER TABLE pedidos ADD COLUMN IF NOT EXISTS restaurante_id BIGINT;
 
 DO $$
 BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_restaurantes_administrador') THEN
+        ALTER TABLE restaurantes ADD CONSTRAINT fk_restaurantes_administrador
+            FOREIGN KEY (administrador_id) REFERENCES usuarios(id);
+    END IF;
     IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_categorias_restaurante') THEN
         ALTER TABLE categorias ADD CONSTRAINT fk_categorias_restaurante
             FOREIGN KEY (restaurante_id) REFERENCES restaurantes(id);
