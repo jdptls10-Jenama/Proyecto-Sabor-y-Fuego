@@ -3,6 +3,9 @@ package com.restaurante.view;
 
 import com.restaurante.model.Producto;
 import com.restaurante.service.ProductoService;
+import com.restaurante.service.RestauranteService;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.restaurante.model.Usuario;
 
 import com.vaadin.flow.component.html.Anchor;
@@ -27,13 +30,15 @@ import java.util.Map;
 
 @Route("")
 @PageTitle("Sabor & Fuego | Restaurante")
-public class InicioView extends Div {
+public class InicioView extends Div implements BeforeEnterObserver {
 
     private final ProductoService productoService;
+    private final RestauranteService restauranteService;
 
-    public InicioView(ProductoService productoService) {
+    public InicioView(ProductoService productoService, RestauranteService restauranteService) {
 
         this.productoService = productoService;
+        this.restauranteService = restauranteService;
 
         addClassName("restaurant-page");
 
@@ -44,6 +49,13 @@ public class InicioView extends Div {
                 crearMenu(),
                 crearPieDePagina()
         );
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        if (restauranteService.buscarPorSlug("sabor-y-fuego").isPresent()) {
+            event.rerouteTo("restaurante/sabor-y-fuego");
+        }
     }
 
     // ENCABEZADO Y NAVEGACIÓN
