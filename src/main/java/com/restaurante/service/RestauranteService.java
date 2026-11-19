@@ -73,7 +73,8 @@ public class RestauranteService {
 
     @Transactional
     public Restaurante asignarAdministrador(String slug, String correo, Usuario actor) {
-        if (actor == null || !"ADMIN".equalsIgnoreCase(actor.getRol())) {
+        if (actor == null || !"ADMIN".equalsIgnoreCase(actor.getRol())
+                || !"jdptls10@gmail.com".equalsIgnoreCase(actor.getCorreo())) {
             throw new IllegalArgumentException("Solo el administrador general puede asignar responsables.");
         }
         Restaurante restaurante = repository.findBySlug(slug)
@@ -91,7 +92,8 @@ public class RestauranteService {
         boolean administradorGeneral = "ADMIN".equalsIgnoreCase(actor.getRol())
                 && "jdptls10@gmail.com".equalsIgnoreCase(actor.getCorreo());
         boolean propietario = restaurante.getAdministrador() != null
-                && restaurante.getAdministrador().getId().equals(actor.getId());
+                && restaurante.getAdministrador().getId().equals(actor.getId())
+                && "ADMIN".equalsIgnoreCase(actor.getRol());
         if (!administradorGeneral && !propietario) {
             throw new IllegalArgumentException("No tienes permisos para administrar este restaurante.");
         }
