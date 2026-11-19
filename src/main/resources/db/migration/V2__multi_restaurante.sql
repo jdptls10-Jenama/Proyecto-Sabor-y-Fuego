@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS restaurantes (
 ALTER TABLE restaurantes ADD COLUMN IF NOT EXISTS administrador_id BIGINT;
 ALTER TABLE categorias ADD COLUMN IF NOT EXISTS restaurante_id BIGINT;
 ALTER TABLE productos ADD COLUMN IF NOT EXISTS restaurante_id BIGINT;
+ALTER TABLE productos ADD COLUMN IF NOT EXISTS imagen_url VARCHAR(1000);
 ALTER TABLE pedidos ADD COLUMN IF NOT EXISTS restaurante_id BIGINT;
 
 DO $$
