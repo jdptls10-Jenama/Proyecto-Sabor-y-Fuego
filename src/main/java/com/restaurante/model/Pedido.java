@@ -23,6 +23,10 @@ public class Pedido {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurante_id")
+    private Restaurante restaurante;
+
     @Column(name = "fecha_pedido", nullable = false)
     private LocalDateTime fechaPedido;
 
@@ -145,6 +149,10 @@ public class Pedido {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public Restaurante getRestaurante() { return restaurante; }
+
+    public void setRestaurante(Restaurante restaurante) { this.restaurante = restaurante; }
 
     public LocalDateTime getFechaPedido() {
         return fechaPedido;

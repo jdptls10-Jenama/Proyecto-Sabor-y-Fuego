@@ -2,6 +2,7 @@
 package com.restaurante.view;
 
 import com.restaurante.model.Producto;
+import com.restaurante.model.Usuario;
 import com.restaurante.service.ProductoService;
 
 import com.vaadin.flow.component.HasStyle;
@@ -25,6 +26,7 @@ import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.streams.UploadHandler;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.math.BigDecimal;
 import java.util.Base64;
@@ -62,6 +64,13 @@ public class ProductosView extends VerticalLayout {
 
     public ProductosView(ProductoService productoService) {
         this.productoService = productoService;
+        Usuario usuario = (Usuario) VaadinSession.getCurrent().getAttribute("usuarioActual");
+        if (usuario == null || !"ADMIN".equalsIgnoreCase(usuario.getRol())
+                || !"jdptls10@gmail.com".equalsIgnoreCase(usuario.getCorreo())) {
+            Notification.show("Este panel pertenece al administrador general. Usa el panel de tu restaurante.");
+            getUI().ifPresent(ui -> ui.navigate("login"));
+            return;
+        }
 
         configurarPagina();
         configurarCampos();

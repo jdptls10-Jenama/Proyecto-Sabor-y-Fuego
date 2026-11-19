@@ -2,6 +2,8 @@ package com.restaurante.view;
 
 import com.restaurante.service.UsuarioService;
 import com.restaurante.model.Usuario;
+import com.restaurante.model.Restaurante;
+import com.restaurante.repository.RestauranteRepository;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Anchor;
@@ -19,14 +21,19 @@ import com.vaadin.flow.server.VaadinSession;
 @PageTitle("Iniciar sesión | Sabor & Fuego")
 public class LoginView extends Div {
 
-    public LoginView(UsuarioService usuarioService) {
+    public LoginView(UsuarioService usuarioService, RestauranteRepository restauranteRepository) {
 
         addClassName("auth-page");
 
         H2 titulo = new H2("Bienvenido de nuevo");
 
+        String rutaPendiente = (String) VaadinSession.getCurrent().getAttribute("rutaDespuesLogin");
         Paragraph descripcion = new Paragraph(
-                "Ingresa a tu cuenta de Sabor & Fuego."
+                rutaPendiente != null && (rutaPendiente.startsWith("restaurante/")
+                        || rutaPendiente.startsWith("restaurante-pedidos/")
+                        || rutaPendiente.startsWith("restaurante-admin/"))
+                        ? "Inicia sesión para continuar en el restaurante que elegiste."
+                        : "Ingresa a tu cuenta para continuar."
         );
 
         EmailField correo = new EmailField("Correo electrónico");
@@ -67,7 +74,14 @@ public class LoginView extends Div {
 
                 if (rutaDestino == null || rutaDestino.isBlank()) {
                     if ("ADMIN".equalsIgnoreCase(cliente.getRol())) {
-                        rutaDestino = "admin";
+                        if ("jdptls10@gmail.com".equalsIgnoreCase(cliente.getCorreo())) {
+                            rutaDestino = "admin";
+                        } else {
+                            rutaDestino = restauranteRepository
+                                    .findFirstByAdministrador_IdOrderByNombreAsc(cliente.getId())
+                                    .map(r -> "restaurante-admin/" + r.getSlug())
+                                    .orElse("");
+                        }
                     } else {
                         rutaDestino = "";
                     }

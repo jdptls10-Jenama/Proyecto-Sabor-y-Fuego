@@ -38,7 +38,8 @@ public class AdminView extends VerticalLayout {
 
         // Comprobar sesión de administrador
         if (usuario == null ||
-                !"ADMIN".equalsIgnoreCase(usuario.getRol())) {
+                !"ADMIN".equalsIgnoreCase(usuario.getRol()) ||
+                !"jdptls10@gmail.com".equalsIgnoreCase(usuario.getCorreo())) {
 
             Notification.show("No tienes permisos para acceder.");
             getUI().ifPresent(ui -> ui.navigate("login"));
@@ -126,6 +127,11 @@ public class AdminView extends VerticalLayout {
                 event -> getUI().ifPresent(ui -> ui.navigate("reportes"))
         );
 
+        Button restaurantesButton = new Button(
+                "Administrar restaurantes",
+                event -> getUI().ifPresent(ui -> ui.navigate("plataforma/restaurantes"))
+        );
+
         Button cerrarSesion = new Button("Cerrar sesión", event -> {
 
             VaadinSession.getCurrent().setAttribute("usuarioActual", null);
@@ -137,6 +143,7 @@ public class AdminView extends VerticalLayout {
         estilizarBoton(pedidosButton);
         estilizarBoton(productosButton);
         estilizarBoton(reportesButton);
+        estilizarBoton(restaurantesButton);
 
         cerrarSesion.getStyle()
                 .set("background", "#333333")
@@ -147,6 +154,7 @@ public class AdminView extends VerticalLayout {
                 pedidosButton,
                 productosButton,
                 reportesButton,
+                restaurantesButton,
                 cerrarSesion
         );
 

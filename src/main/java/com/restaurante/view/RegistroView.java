@@ -93,7 +93,11 @@ public class RegistroView extends Div {
                             "Cuenta creada correctamente"
                     );
 
-                    getUI().ifPresent(ui -> ui.navigate(""));
+                    String destino = (String) VaadinSession.getCurrent().getAttribute("rutaDespuesLogin");
+                    VaadinSession.getCurrent().setAttribute("rutaDespuesLogin", null);
+                    if (destino == null || destino.isBlank()) destino = "";
+                    final String destinoFinal = destino;
+                    getUI().ifPresent(ui -> ui.navigate(destinoFinal));
 
                 } else {
 
