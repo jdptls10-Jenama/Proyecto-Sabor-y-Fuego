@@ -141,7 +141,8 @@ public class AdminView extends VerticalLayout {
 
         estilizarBoton(pedidosButton);
         estilizarBoton(productosButton);
-        estilizarBoton(reportesButton);\n        estilizarBoton(restaurantesButton);
+        estilizarBoton(reportesButton);
+        estilizarBoton(restaurantesButton);
 
         cerrarSesion.getStyle()
                 .set("background", "#333333")
