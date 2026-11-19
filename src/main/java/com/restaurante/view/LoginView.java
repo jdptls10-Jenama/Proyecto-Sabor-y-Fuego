@@ -2,6 +2,8 @@ package com.restaurante.view;
 
 import com.restaurante.service.UsuarioService;
 import com.restaurante.model.Usuario;
+import com.restaurante.model.Restaurante;
+import com.restaurante.repository.RestauranteRepository;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Anchor;
@@ -19,7 +21,7 @@ import com.vaadin.flow.server.VaadinSession;
 @PageTitle("Iniciar sesión | Sabor & Fuego")
 public class LoginView extends Div {
 
-    public LoginView(UsuarioService usuarioService) {
+    public LoginView(UsuarioService usuarioService, RestauranteRepository restauranteRepository) {
 
         addClassName("auth-page");
 
@@ -70,7 +72,14 @@ public class LoginView extends Div {
 
                 if (rutaDestino == null || rutaDestino.isBlank()) {
                     if ("ADMIN".equalsIgnoreCase(cliente.getRol())) {
-                        rutaDestino = "admin";
+                        if ("jdptls10@gmail.com".equalsIgnoreCase(cliente.getCorreo())) {
+                            rutaDestino = "admin";
+                        } else {
+                            rutaDestino = restauranteRepository
+                                    .findFirstByAdministrador_IdOrderByNombreAsc(cliente.getId())
+                                    .map(r -> "restaurante-admin/" + r.getSlug())
+                                    .orElse("");
+                        }
                     } else {
                         rutaDestino = "";
                     }
