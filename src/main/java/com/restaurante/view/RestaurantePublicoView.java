@@ -245,7 +245,8 @@ public class RestaurantePublicoView extends VerticalLayout implements HasUrlPara
             VaadinSession.getCurrent().setAttribute("rutaDespuesLogin", "restaurante/" + restaurante.getSlug());
             opciones.add(new Anchor("/login", "Iniciar sesión"), new Anchor("/registro", "Crear cuenta"));
         } else {
-            opciones.add(new Paragraph(usuario.getNombre()), new Paragraph(usuario.getCorreo()));
+            opciones.add(new Paragraph(usuario.getNombre()), new Paragraph(usuario.getCorreo()),
+                    new Anchor("/restaurante-pedidos/" + restaurante.getSlug(), "Mis pedidos en este restaurante"));
             boolean puedeAdministrar = "jdptls10@gmail.com".equalsIgnoreCase(usuario.getCorreo())
                     || (restaurante.getAdministrador() != null
                     && restaurante.getAdministrador().getId().equals(usuario.getId()));
