@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS restaurantes (
     id BIGSERIAL PRIMARY KEY,
     nombre VARCHAR(120) NOT NULL,
     slug VARCHAR(80) NOT NULL UNIQUE,
-    administrador_id BIGINT NULL REFERENCES usuarios(id),
+    administrador_id BIGINT NULL,
     logo_url VARCHAR(1000),
     color_primario VARCHAR(20) NOT NULL DEFAULT '#D6AD55',
     color_secundario VARCHAR(20) NOT NULL DEFAULT '#101010',
@@ -56,6 +56,10 @@ SELECT
 WHERE NOT EXISTS (
     SELECT 1 FROM restaurantes WHERE slug = 'sabor-y-fuego'
 );
+
+UPDATE restaurantes
+SET administrador_id = (SELECT id FROM usuarios WHERE LOWER(correo) = 'jdptls10@gmail.com' LIMIT 1)
+WHERE slug = 'sabor-y-fuego' AND administrador_id IS NULL;
 
 -- Asigna todos los registros históricos al restaurante existente.
 UPDATE categorias
