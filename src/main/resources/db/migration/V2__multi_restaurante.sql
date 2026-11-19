@@ -65,6 +65,15 @@ UPDATE pedidos
 SET restaurante_id = (SELECT id FROM restaurantes WHERE slug = 'sabor-y-fuego')
 WHERE restaurante_id IS NULL;
 
+-- Después de asignar el histórico, se exige restaurante para todos los registros.
+ALTER TABLE categorias ALTER COLUMN restaurante_id SET NOT NULL;
+ALTER TABLE productos ALTER COLUMN restaurante_id SET NOT NULL;
+ALTER TABLE pedidos ALTER COLUMN restaurante_id SET NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_categorias_restaurante ON categorias(restaurante_id);
+CREATE INDEX IF NOT EXISTS idx_productos_restaurante ON productos(restaurante_id);
+CREATE INDEX IF NOT EXISTS idx_pedidos_restaurante_fecha ON pedidos(restaurante_id, fecha_pedido DESC);
+
 -- Verificación: estos tres conteos de filas sin restaurante deben ser cero.
 SELECT 'categorias' AS tabla, COUNT(*) AS sin_restaurante
 FROM categorias WHERE restaurante_id IS NULL
